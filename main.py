@@ -1,6 +1,8 @@
+import mcp_client
 import requests
 import json
-import tools
+import mcp_client
+import asyncio
 
 
 url = "http://192.168.8.172:11434/api/generate"
@@ -68,7 +70,7 @@ if response.status_code == 200:
         print(response_json["tool"])
         arguments = response_json["arguments"]
         if response_json["tool"] == "add_numbers":
-            result = tools.add_numbers(arguments["a"], arguments["b"])
+            result = asyncio.run(mcp_client.call_mcp_tool("add_numbers", arguments))
             print("Result:")
             print(result)
             followup_prompt = f"""
